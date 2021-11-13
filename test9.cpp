@@ -22,6 +22,11 @@ bool test2(int *t) {
   return true;
 }
 
+class A {
+ public:
+  A(int i) {}
+};
+
 int main() {
   std::string a = "abcdefg";
   std::vector<char> b = {a.begin(), a.end()};
@@ -35,4 +40,5 @@ int main() {
     ++e_;
     std::cout << e_ << "\n";
   }
+  auto k = new A(1);
 }
