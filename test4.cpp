@@ -15,6 +15,11 @@
 #include <atomic>
 #include <thread>
 
+void test() {
+  static int a = 4;
+  std::cout << std::to_string(++a);
+}
+
 class A {
  public:
   A() {
@@ -33,6 +38,17 @@ class A {
   std::atomic<int> c_;
 };
 
+class B {
+ public:
+  B(std::function<void()> f) {
+    f_ = std::move(f);
+  }
+  void ha() {
+    f_();
+  }
+ private:
+  std::function<void()> f_;
+};
 
 int main() {
   auto a = new A();
@@ -42,5 +58,8 @@ int main() {
   a->call_back(&f);
   f();
   a->print();
+  auto b = B(test);
+  b.ha();
+  test();
   return 0;
 }

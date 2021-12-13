@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#define WAVE wave
+
 class ITest {
  public:
   virtual void wave() = 0;
@@ -33,8 +35,8 @@ int main() {
   ITest1 *t1 = &t;
   ITest *t2 = t1;
   ITest *t3 = &t;
-  t1->wave();
-  t2->wave();
-  t3->wave();
+  t1->WAVE();
+  t2->WAVE();
+  t3->WAVE();
   return 0;
 }
