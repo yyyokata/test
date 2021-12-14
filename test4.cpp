@@ -15,9 +15,23 @@
 #include <atomic>
 #include <thread>
 
-void test() {
+bool test() {
   static int a = 4;
   std::cout << std::to_string(++a);
+  return a > 3;
+}
+
+bool test2(const int &a) {
+  return a < 3;
+}
+
+bool test3(const float &a) {
+  return a > 4;
+}
+
+template <class T>
+bool default_checker(const T &value) {
+  return true;
 }
 
 class A {
@@ -50,6 +64,17 @@ class B {
   std::function<void()> f_;
 };
 
+template <typename T>
+using Checker = bool (*)(const T &);
+
+template <typename T, Checker<T> checker = default_checker<T>>
+class C {
+ public:
+  bool test(const T &value) {
+    return checker(value);
+  }
+};
+
 int main() {
   auto a = new A();
   a->atomic_s();
@@ -61,5 +86,11 @@ int main() {
   auto b = B(test);
   b.ha();
   test();
+  auto c1 = C<int>();
+  auto c2 = C<int, test2>();
+  auto c3 = C<float, test3>();
+  std::cout << c1.test(3);
+  std::cout << c2.test(3);
+  std::cout << c3.test(3);
   return 0;
 }
