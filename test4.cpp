@@ -73,6 +73,11 @@ class C {
   bool test(const T &value) {
     return checker(value);
   }
+  template<class T>
+  bool checker_wrapper(const &T);
+  bool check_wrapper<std::string>(const &T) {
+    return check(T);
+  }
 };
 
 int main() {
