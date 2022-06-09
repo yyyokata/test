@@ -22,7 +22,7 @@ class Test {
     std::cout << "test2" << "\n";
   }
 
-  virtual void wave3() = 0;
+  virtual void wave3() {};
 };
 
 class Test1 : public Test {
@@ -48,34 +48,52 @@ class Test2 : public Test {
   }
 };
 
+void test(Test1 t) {
+  t.wave();
+  t.wave2();
+  t.wave3();
+}
+
+void testano(Test t) {
+  t.wave();
+  t.wave2();
+  t.wave3();
+}
+
 int main() {
-  Test1 *test1 = new Test1();
-  Test2 *test2 = new Test2();
-  test1->wave();
-  test1->wave2();
-  test1->wave3();
-  test2->wave();
-  test2->wave2();
-  test2->wave3();
-  Test* t1 = test1;
-  Test* t2 = test2;
-  t1->wave();
-  t1->wave2();
-  t1->wave3();
-  t2->wave();
-  t2->wave2();
-  t2->wave3();
-  delete test1;
-  delete test2;
+//  Test1 *test1 = new Test1();
+//  Test2 *test2 = new Test2();
+//  test1->wave();
+//  test1->wave2();
+//  test1->wave3();
+//  test2->wave();
+//  test2->wave2();
+//  test2->wave3();
+//  Test* t1 = test1;
+//  Test* t2 = test2;
+//  t1->wave();
+//  t1->wave2();
+//  t1->wave3();
+//  t2->wave();
+//  t2->wave2();
+//  t2->wave3();
+//  delete test1;
+//  delete test2;
+  Test1 t;
+  test(t);
+  testano(t);
   //subtest1
   //subtest2
   //subtest2
+
   //test1
   //sub2test2
   //sub2test2
+
   //test1
   //subtest2
   //subtest2
+
   //test1
   //sub2test2
   //sub2test2
