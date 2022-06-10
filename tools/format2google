@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [ "$(which clang-format)" == "" ]; then
+    echo "Please install clang-format on your OS!"
+fi
+
+usage () {
+    echo "USAGE: format2google [options] <file>"
+    echo "       format2google [options] <dir>"
+    echo
+    echo "OPTIONS:"
+    echo "      -h, --help   Print usage"
+    echo
+}
+file_list1=()
+file_list2=()
+if [ $# -ge 1 ]; then
+    case "${1}" in
+        -h | --help)
+            usage
+            exit 0
+            ;;
+        * )
+        for file in $*; do
+          file_list1[${#file_list1[@]}]=$(find ${file} -name "*.cc" -or -name "*.cpp" -or -name "*.mlu" -or -name "*.cu")
+          file_list2[${#file_list1[@]}]=$(find ${file} -name "*.h" -or -name "*.hpp")
+        done
+            ;;
+    esac
+else
+    usage
+    exit 1
+fi
+
+cnmm_name="cnmm.h"
+for file in ${file_list1[@]}; do
+    echo "clang-formating ${file} ..."
+    clang-format -style="{BasedOnStyle: "Chromium", PointerAlignment: Right, SortIncludes: false, ColumnLimit: 100}" -i ${file}
+done
+
+for file in ${file_list2[@]}; do
+    echo "clang-formating ${file} ..."
+    if [[ $file == *$cnmm_name ]]; then
+      clang-format -style="{BasedOnStyle: "Chromium", PointerAlignment: Right, SortIncludes: false, ColumnLimit: 100, AlignConsecutiveAssignments: true, AlwaysBreakAfterReturnType: TopLevel}" -i ${file}
+    else
+      clang-format -style="{BasedOnStyle: "Chromium", PointerAlignment: Right, SortIncludes: false, ColumnLimit: 100, AlignConsecutiveAssignments: true}" -i ${file}
+    fi
+done
