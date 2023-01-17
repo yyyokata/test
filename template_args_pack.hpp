@@ -34,3 +34,10 @@ std::vector<T> CollectArgs(const std::vector<T> &a, R... args) {
   return ret;
 }
 
+template<class T, class...R>
+std::vector<int> Test(R... args);
+
+template<>
+std::vector<int> Test<bool>(int a, float b) {
+  return {1};
+}

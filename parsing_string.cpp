@@ -48,6 +48,7 @@ std::pair<std::string, int> ParseString(const std::string &name) {
 
 
 int main() {
+  std::cout << std::stoi(" -1");
   std::cout << ParseString("test");
   std::cout << ParseString("test-1024");
   std::cout << ParseString("test-23.4");
